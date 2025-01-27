@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ms-wallet
+  data:
+    mongodb:
+      url: ${MS_WALLET_DB_URI}
+
+  server:
+    port: 8081
+
+  logging:
+    level:
+      org.springframework.data.mongodb.core: DEBUG
