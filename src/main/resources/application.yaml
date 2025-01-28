@@ -3,10 +3,7 @@ spring:
     name: ms-wallet
   data:
     mongodb:
-      url: ${MS_WALLET_DB_URI}
-
-  server:
-    port: 8081
+      uri: ${MS_WALLET_DB_URI}
 
   logging:
     level:
