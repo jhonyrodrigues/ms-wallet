@@ -1,0 +1,24 @@
+version: '3.2'
+services:
+  mongo.wallet.service:
+    container_name: mongo.wallet.service
+    hostname: mongo.wallet.service
+    image: mongo:4.0.23
+    command: mongod --maxConns 10000
+    volumes:
+      - wallet_service_mongo:/data/db
+    ports:
+      - "37017:27017"
+    networks:
+      pc-environment-network:
+        aliases:
+          - mongo.wallet.service
+networks:
+    pc-environment-network:
+        driver: bridge
+        ipam:
+          config:
+            - subnet: 10.0.0.0/24
+volumes:
+  wallet_service_mongo:
+    driver: "local"
