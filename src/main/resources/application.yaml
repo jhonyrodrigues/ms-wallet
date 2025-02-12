@@ -1,9 +1,14 @@
 spring:
   application:
     name: ms-wallet
-  data:
-    mongodb:
-      uri: ${MS_WALLET_DB_URI}
+  datasource:
+    url: ${MS_WALLET_POSTGRES_DB_URI}
+    username: ${MS_WALLET_POSTGRES_DB_USER}
+    password: ${MS_WALLET_POSTGRES_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 api:
   security:

@@ -20,14 +20,14 @@ public class UserUserCaseImpl implements UserUseCase {
     @Override
     public UserDTO register(final RegisterDTO registerDTO) {
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
-        var userDomain = new UserDomain(registerDTO.login(), encryptedPassword, registerDTO.role());
+        var userDomain = new UserDomain(registerDTO.email(), encryptedPassword, registerDTO.role());
         var user = userGateway.register(userDomain);
         return new UserDTO(user.getLogin());
     }
 
     @Override
-    public UserDTO findByLogin(final String login) {
-        var userDomain = userGateway.findByLogin(login);
+    public UserDTO findByEmail(final String email) {
+        var userDomain = userGateway.findByLogin(email);
         return userDomain != null ? new UserDTO(userDomain.getLogin()) : null;
     }
 }

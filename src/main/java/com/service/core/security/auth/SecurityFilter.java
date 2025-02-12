@@ -1,4 +1,4 @@
-package com.service.core.auth.security;
+package com.service.core.security.auth;
 
 import com.service.dataprovider.database.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -29,7 +29,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if (token != null) {
             var login = tokenService.validateToken(token);
-            var user = userRepository.findByLogin(login);
+            var user = userRepository.findByEmail(login);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

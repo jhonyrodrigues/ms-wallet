@@ -1,8 +1,11 @@
 package com.service.dataprovider.database.entity;
 
 import com.service.core.domain.UserRole;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,18 +13,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Document(collection = "users")
+@Entity
 public class UserEntity implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private final String login;
-    private final String password;
-    private final UserRole role;
+    @Column(unique = true)
+    private String email;
+    private String password;
+    private UserRole role;
 
-    public UserEntity(String login, String password, UserRole role) {
-        this.login = login;
+    public UserEntity(String email, String password, UserRole role) {
+        this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public UserEntity() {
     }
 
     @Override
@@ -39,7 +47,11 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public UserRole getRole() {

@@ -1,4 +1,4 @@
-package com.service.core.auth.security;
+package com.service.core.security.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

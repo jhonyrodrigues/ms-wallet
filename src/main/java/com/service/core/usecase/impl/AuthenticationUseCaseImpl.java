@@ -1,6 +1,6 @@
 package com.service.core.usecase.impl;
 
-import com.service.core.auth.security.TokenService;
+import com.service.core.security.auth.TokenService;
 import com.service.core.usecase.AuthenticationUseCase;
 import com.service.dataprovider.database.entity.UserEntity;
 import com.service.entrypoint.api.dto.AuthenticationDTO;
@@ -21,7 +21,7 @@ public class AuthenticationUseCaseImpl implements AuthenticationUseCase {
 
     @Override
     public String authenticate(final AuthenticationDTO authenticationDTO) {
-        var userAuthentication = new UsernamePasswordAuthenticationToken(authenticationDTO.login(), authenticationDTO.password());
+        var userAuthentication = new UsernamePasswordAuthenticationToken(authenticationDTO.email(), authenticationDTO.password());
         var authentication = authenticationManager.authenticate(userAuthentication);
         return tokenService.generateToken((UserEntity) authentication.getPrincipal());
     }

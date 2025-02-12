@@ -1,6 +1,5 @@
 package com.service.entrypoint.api.controller.impl;
 
-import com.service.core.domain.UserDomain;
 import com.service.core.usecase.AuthenticationUseCase;
 import com.service.core.usecase.UserUseCase;
 import com.service.entrypoint.api.controller.AuthenticationApi;
@@ -8,8 +7,8 @@ import com.service.entrypoint.api.dto.AuthenticationDTO;
 import com.service.entrypoint.api.dto.LoginResponseDTO;
 import com.service.entrypoint.api.dto.RegisterDTO;
 import com.service.entrypoint.api.dto.UserDTO;
+import com.service.entrypoint.api.exception.UserAlreadyExistsException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,15 +23,14 @@ public class AuthenticationController implements AuthenticationApi {
     }
 
     @Override
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody AuthenticationDTO data) {
+    public ResponseEntity<LoginResponseDTO> login(final AuthenticationDTO data) {
         return ResponseEntity.ok(new LoginResponseDTO(authenticationUseCase.authenticate(data)));
     }
 
     @Override
-    public ResponseEntity<UserDTO> register(@RequestBody RegisterDTO data) {
-        if (userUseCase.findByLogin(data.login()) != null)
-            return ResponseEntity.badRequest().build();
-
+    public ResponseEntity<UserDTO> register(final RegisterDTO data) {
+        if (userUseCase.findByEmail(data.email()) != null)
+            throw new UserAlreadyExistsException("Login already registered");
         return ResponseEntity.ok(userUseCase.register(data));
     }
 }

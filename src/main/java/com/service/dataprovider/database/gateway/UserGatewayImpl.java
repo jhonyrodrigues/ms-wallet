@@ -23,7 +23,7 @@ public class UserGatewayImpl implements UserGateway {
 
     @Override
     public UserDomain findByLogin(final String login) {
-        var user = userRepository.findByLogin(login);
+        var user = userRepository.findByEmail(login);
         if (user != null) {
             return new UserDomain(user.getUsername(), user.getRole());
         }

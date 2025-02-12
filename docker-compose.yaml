@@ -1,24 +1,27 @@
 version: '3.2'
 services:
-  mongo.wallet.service:
-    container_name: mongo.wallet.service
-    hostname: mongo.wallet.service
-    image: mongo:4.0.23
-    command: mongod --maxConns 10000
+  postgres.wallet.service:
+    container_name: postgres.wallet.service
+    hostname: postgres.wallet.service
+    image: postgres:15
+    environment:
+      POSTGRES_DB: wallet_db
+      POSTGRES_USER: wallet_user
+      POSTGRES_PASSWORD: wallet_pass
     volumes:
-      - wallet_service_mongo:/data/db
+      - wallet_service_postgres:/var/lib/postgresql/data
     ports:
-      - "37017:27017"
+      - "35432:5432"
     networks:
       pc-environment-network:
         aliases:
-          - mongo.wallet.service
+          - postgres.wallet.service
 networks:
-    pc-environment-network:
-        driver: bridge
-        ipam:
-          config:
-            - subnet: 10.0.0.0/24
+  pc-environment-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
 volumes:
-  wallet_service_mongo:
+  wallet_service_postgres:
     driver: "local"

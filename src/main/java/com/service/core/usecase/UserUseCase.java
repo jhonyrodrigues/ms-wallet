@@ -7,6 +7,6 @@ public interface UserUseCase {
 
     UserDTO register(RegisterDTO registerDTO);
 
-    UserDTO findByLogin(String login);
+    UserDTO findByEmail(String login);
 
 }
